@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunset2Calendar</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="img-container">
+    <img src="sunset.png" alt="Sunset" class="header-image">
+    <div class="overlay-text">Sunset2Calendar</div>
+    </div>
+  <div class="container">    
+    <div class="location">
+      <span>Location:</span>
+      <span id="current-location">Current Location</span>
+      <div class="location-input">
+        <input type="text" id="location" placeholder="Enter location">
+        <button id="search-button">Search</button>
+      </div>
+    </div>
+
+    <div class="date">
+      <label for="date-range">Dates:</label>
+      <input type="date" id="date-range-start">
+      <input type="date" id="date-range-end">
+    </div>
+
+    <div class="add-remove">
+      <button id="add-event" class="submit-button">Add</button>
+      <button id="remove-event" class="submit-button">Remove</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

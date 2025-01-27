@@ -1,0 +1,138 @@
+html, body {
+    width: 300px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+body {
+    border: 5px solid #033655;
+    box-sizing: border-box;
+}
+
+.container {
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.img-container {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 2px solid black;
+    margin: 0;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.location {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.location span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#current-location {
+    font-weight: normal;
+    color: #555;
+}
+
+.location-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.location-input input {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: calc(100% - 80px);
+}
+
+#search-button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 70px;
+    box-sizing: border-box;
+}
+
+#search-button:hover {
+    background-color: #45a049;
+}
+
+.date {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.date label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.date input {
+    width: calc(100% - 12px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.date-range {
+    display: flex;
+    gap: 5px;
+}
+
+.date-range input {
+    width: calc(50% - 5px);
+}
+
+.add-remove {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.submit-button {
+    flex: 1;
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
