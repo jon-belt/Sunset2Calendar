@@ -25,7 +25,8 @@ def authenticate_google_calendar():
             token.write(creds.to_json())
 
     #Builds the service object
-    return build('calendar', 'v3', credentials=creds)
+    service_obj = build('calendar', 'v3', credentials=creds)
+    return service_obj
 
 #Get the sunset time using the 'sunrise-sunset' api
 def get_sunset_time(lat, lon, date):
@@ -37,12 +38,11 @@ def get_sunset_time(lat, lon, date):
 #Format sunset time into a format that can be used by the Google Calendar API
 def format_sunset_time(sunset_time):
     sunset_time_obj = datetime.fromisoformat(sunset_time.replace('Z', '+00:00'))
-    return sunset_time_obj.isoformat()
+    formatted_date = sunset_time_obj.isoformat()
+    return formatted_date
 
 #Adds the event to Google Calendar
 def add_event_to_calendar(service, sunset_time):
-    formatted_sunset_time = format_sunset_time(sunset_time)
-    
     #Convert the formatted sunset time into a datetime object
     sunset_datetime = datetime.fromisoformat(formatted_sunset_time)
     
