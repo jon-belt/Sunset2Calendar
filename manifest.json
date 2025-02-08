@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Sunset2Calendar",
+    "version": "1.0",
+    "description": "An extension to add sunset times to your calendar.",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "https://www.googleapis.com/",
+        "identity",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://calendar.google.com/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["popup.html", "icon.png"],
+            "matches": ["https://calendar.google.com/*"]
+        }
+    ]
+}

@@ -9,9 +9,10 @@
 
 <body>
   <div class="img-container">
-    <img src="sunset.png" alt="Sunset" class="header-image">
+    <img src="sunset.png" alt="Sunset" class="header-image" id="toggleImg">
     <div class="overlay-text">
-      Sunset2Calendar
+      <div id="toggleTitle">Sunset2Calendar</div>
+      <button id="changeButton" class="toggle-switch"></button>
       <div class="info-button" data-tooltip="How to use:
 
         1. Select your location, using either the 'Current Location' button or by typing in a location.
@@ -45,5 +46,6 @@
     </div>
   </div>
   <script src="popup.js"></script>
+  <script src="toggle.js"></script>
 </body>
 </html>
