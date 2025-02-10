@@ -5,7 +5,7 @@
     "description": "An extension to add sunset times to your calendar.",
     "action": {
         "default_popup": "popup.html",
-        "default_icon": "icon.png"
+        "default_icon": "imgs/icon.png"
     },
     "permissions": [
         "https://www.googleapis.com/",
@@ -17,7 +17,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["popup.html", "icon.png"],
+            "resources": ["popup.html", "imgs/icon.png"],
             "matches": ["https://calendar.google.com/*"]
         }
     ]

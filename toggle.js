@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("toggleTitle").textContent = toggled ? "Sunrise2Calendar" : "Sunset2Calendar";
 
         //change image source
-        document.getElementById("toggleImg").src = toggled ? "sunrise.png" : "sunset.png";
+        document.getElementById("toggleImg").src = toggled ? "imgs/sunrise.png" : "imgs/sunset.png";
 
         //toggle button
         button.classList.toggle("toggled");
