@@ -1,3 +1,6 @@
+//This scrip handles the logic of getting the user's location.
+//This is done through the browser's Geolocation API, as well as the Google places API.
+
 const x = document.getElementById("current-location");
 
 document.addEventListener('DOMContentLoaded', function () {
