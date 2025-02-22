@@ -81,7 +81,13 @@ body {
     width: calc(100% - 80px);
 }
 
-#search-button {
+#error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+#search-button, #submit-country{
     padding: 5px 10px;
     background-color: #4CAF50;
     color: white;
@@ -92,7 +98,7 @@ body {
     box-sizing: border-box;
 }
 
-#search-button:hover {
+#search-button:hover, #submit-country:hover{
     background-color: #45a049;
 }
 
