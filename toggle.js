@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let toggled = false;
 
     button.addEventListener("click", function () {
-        console.log("Button was clicked");
         toggled = !toggled;
         //change document title
         document.title = toggled ? "Sunrise2Calendar" : "Sunset2Calendar";

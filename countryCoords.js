@@ -261,9 +261,9 @@ document.getElementById('submit-country').addEventListener('click', function () 
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates[0]},${coordinates[1]}&key=${apiKey}`;
 
         $.get(url, function(data) {
-            console.log(data);
+            //console.log(data);    //debugging
             if (data.results && data.results.length > 0) {
-                document.getElementById('current-location').innerHTML = data.results[(data.results.length-1)].formatted_address;
+                document.getElementById('current-location').innerHTML = data.results[(data.results.length-1)].formatted_address + "<br>" + coordinates;
             } else {
                 console.error("No address found for the given coordinates.");
             }

@@ -16,15 +16,16 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    console.log("Latitude: " + position.coords.latitude + 
-    " Longitude: " + position.coords.longitude);
+    //debugging
+    //console.log("Latitude: " + position.coords.latitude + 
+    //" Longitude: " + position.coords.longitude);
 
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=${apiKey}`;
 
     $.get(url, function(data) {
-        console.log(data);
+        //console.log(data);    //debugging
         if (data.results && data.results.length > 0) {
-            x.innerHTML = data.results[11].formatted_address;
+            x.innerHTML = data.results[11].formatted_address + "<br>" + position.coords.latitude + ", " + position.coords.longitude;
         } else {
             console.error("No address found for the given coordinates.");
         }
