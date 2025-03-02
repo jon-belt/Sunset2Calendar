@@ -1,4 +1,4 @@
-document.getElementById('add-event').addEventListener('click', handleEvent);
+document.getElementById('add-event').addEventListener('click', addEvent);
 
 function getDateRange(startDate, endDate) {
     let start = new Date(startDate);
@@ -18,7 +18,8 @@ function getDateRange(startDate, endDate) {
     return dateArray;
 }
 
-function handleEvent(event) {
+function addEvent(event) {
+    console.log('Add Event Button clicked');
     const buttonId = event.target.id;
     //I know this is not the most optimum way to do this, but oh well
 
