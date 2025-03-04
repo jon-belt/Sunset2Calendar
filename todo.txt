@@ -1,0 +1,6 @@
+basically, implement the working script within this extension.
+
+no need to change the entire project layout
+
+simply, add popup and background.js' and attach it's current script to the add-event button,
+ONLY THEN can the current script within addToCalendar.js be worked around the working calendar api script
