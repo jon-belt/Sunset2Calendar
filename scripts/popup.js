@@ -35,13 +35,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener to the "removeEvent" button
     document.getElementById("removeEvent").addEventListener("click", () => {
-        const selectedDate = document.getElementById("eventDate").value;
-        if (!selectedDate) {
-            alert("Please select a date to remove events.");
+        const startDate = document.getElementById("date-range-start").value;
+        const endDate = document.getElementById("date-range-end").value;
+
+        if (!startDate || !endDate) {
+            alert("Please select both start and end dates.");
             return;
         }
 
-        chrome.runtime.sendMessage({ action: "removeTaggedEvents", date: selectedDate }, (response) => {
+        const toggle = document.getElementById("changeButton");
+        const toggleStatus = toggle.classList.contains("toggled");
+
+        chrome.runtime.sendMessage({ action: "removeEvent", startDate: startDate, endDate: endDate, toggleStatus: toggleStatus }, (response) => {
             if (response && response.success) {
                 alert("Tagged events removed successfully!");
             } else {

@@ -43,6 +43,7 @@ function checkForDuplicateEvent(token, date, tag, callback) {
     .then(response => response.json())
     .then(data => {
         const events = data.items || [];
+        console.log(`Events found for ${tag} on ${date}:`, events); // Debugging
         const duplicateEvent = events.find(event => event.extendedProperties && event.extendedProperties.private && event.extendedProperties.private.extensionTag === tag);
         callback(!!duplicateEvent);
     })
@@ -84,18 +85,22 @@ function addCalEvent(token, locationText, startDate, endDate, toggleStatus, send
                     const sunsetDateTime = parseSunsetTime(date, sunsetTime);
                     const sunriseDateTime = parseSunsetTime(date, sunriseTime);
 
-                    let eventTime, eventEndTime, tag;
+                    let eventTime, eventEndTime, tag, colorId;
                     if (toggleStatus === true) {
                         // Add sunrise event
                         eventTime = sunriseDateTime;
                         eventEndTime = new Date(sunriseDateTime.getTime() + 60 * 1000); // 1 minute later
                         tag = "Sunrise";
+                        colorId = "5"; // Banana (Yellow)
                     } else {
                         // Add sunset event
                         eventTime = sunsetDateTime;
                         eventEndTime = new Date(sunsetDateTime.getTime() + 60 * 1000); // 1 minute later
                         tag = "Sunset";
+                        colorId = "8"; // Graphite (Grey)
                     }
+
+                    console.log(`Creating event with colorId: ${colorId}`); // Debugging
 
                     checkForDuplicateEvent(token, date, tag, isDuplicate => {
                         if (isDuplicate) {
@@ -116,6 +121,7 @@ function addCalEvent(token, locationText, startDate, endDate, toggleStatus, send
                                     description: `${tag} Event Created by Sunset2Calendar`,
                                     start: { dateTime: eventTime.toISOString(), timeZone: "UTC" },
                                     end: { dateTime: eventEndTime.toISOString(), timeZone: "UTC" },
+                                    colorId: colorId,
                                     extendedProperties: {
                                         private: { extensionTag: tag }
                                     }
@@ -157,6 +163,61 @@ function addCalEvent(token, locationText, startDate, endDate, toggleStatus, send
     }
 }
 
+function removeEvents(token, startDate, endDate, tag, sendResponse) {
+    const dateRange = getDateRange(startDate, endDate);
+    let successCount = 0;
+    let errorCount = 0;
+
+    dateRange.forEach(date => {
+        const startOfDay = new Date(date).toISOString();
+        const endOfDay = new Date(new Date(date).setDate(new Date(date).getDate() + 1)).toISOString();
+
+        fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${startOfDay}&timeMax=${endOfDay}&q=${tag}`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const events = data.items || [];
+            const eventIds = events.filter(event => event.extendedProperties && event.extendedProperties.private && event.extendedProperties.private.extensionTag === tag).map(event => event.id);
+
+            eventIds.forEach(eventId => {
+                fetch(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${eventId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(() => {
+                    successCount++;
+                    if (successCount + errorCount === dateRange.length) {
+                        sendResponse({ success: successCount > 0, successCount, errorCount });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error Deleting Event:", error);
+                    errorCount++;
+                    if (successCount + errorCount === dateRange.length) {
+                        sendResponse({ success: successCount > 0, successCount, errorCount });
+                    }
+                });
+            });
+
+            if (eventIds.length === 0) {
+                sendResponse({ success: false, error: "If events found, they have been deleted." });
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching events to delete:", error);
+            sendResponse({ success: false, error: error.message });
+        });
+    });
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "addEvent") {
         console.log(`Received locationText: ${request.locationText}`); // Debugging
@@ -171,14 +232,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true;
     }
 
-    if (request.action === "removeTaggedEvents") {
+    if (request.action === "removeEvent") {
         chrome.identity.getAuthToken({ interactive: false }, (token) => {
             if (chrome.runtime.lastError || !token) {
                 console.error("Auth Error:", chrome.runtime.lastError?.message || "Token missing");
                 sendResponse({ success: false, error: chrome.runtime.lastError?.message || "Authentication failed" });
                 return;
             }
-            removeCalEventsByTag(token, request.date, sendResponse);
+
+            let tag;
+            if (request.toggleStatus === true) {
+                // Remove sunrise event
+                tag = "Sunrise";
+            } else {
+                // Remove sunset event
+                tag = "Sunset";
+            }
+            removeEvents(token, request.startDate, request.endDate, tag, sendResponse);
         });
         return true;
     }
